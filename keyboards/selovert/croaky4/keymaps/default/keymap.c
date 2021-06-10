@@ -19,21 +19,27 @@
  */
 #include QMK_KEYBOARD_H
 
+enum custom_keycodes {
+    MUTEMIC = SAFE_RANGE,
+};
+
+bool micMuted = 0;
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [0] = LAYOUT(
                      LT(1,KC_MPRV) , KC_MNXT ,
         KC_MUTE    ,
-                     XXXXXXX       , KC_MPLY
+                     MUTEMIC       , KC_MPLY
     ),
 
     [1] = LAYOUT(
                      _______ , _______ ,
-        RGB_TOG    ,
+        RESET      ,
                      _______ , _______
     )
 };
 
-void encoder_update_user(uint8_t index, bool clockwise) {
+bool encoder_update_user(uint8_t index, bool clockwise) {
     switch(biton32(layer_state)){
         case 0:
             if (clockwise) {
@@ -41,11 +47,33 @@ void encoder_update_user(uint8_t index, bool clockwise) {
             } else {
                 tap_code(KC_VOLD);
             }
+            break;
         case 1:
             if (clockwise) {
                 rgblight_increase_val();
             } else {
                 rgblight_decrease_val();
             }
+            break;
     }
+    return true;
+}
+
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        case MUTEMIC:
+        if (record->event.pressed) {
+          micMuted = !micMuted;
+            if (micMuted) {
+              rgblight_setrgb_at(0, 0, 0, 2);
+            } else {
+              // rgblight_setrgb_at(255, 255, 255, 2);
+              rgblight_enable();
+            }
+        } else {
+          break;
+        }
+            break;
+    }
+    return true;
 }
