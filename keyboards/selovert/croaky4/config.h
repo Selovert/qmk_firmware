@@ -31,9 +31,7 @@
 
 #define RGB_DI_PIN D6
 #define RGBLED_NUM 7
-// #define RGBLIGHT_LED_MAP { 4, 3, 5, 6, 0, 1, 2}
 #define RGBLIGHT_LED_MAP { 4, 5, 6, 1, 0, 2, 3 }
-// #define RGBLIGHT_LED_MAP { 3, 4, 5, 6, 0, 1, 2 }
 
 #define ENCODERS_PAD_A { B2 }
 #define ENCODERS_PAD_B { B1 }

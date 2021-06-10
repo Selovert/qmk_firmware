@@ -67,7 +67,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             if (micMuted) {
               rgblight_setrgb_at(0, 0, 0, 2);
             } else {
-              // rgblight_setrgb_at(255, 255, 255, 2);
               rgblight_enable();
             }
         } else {
